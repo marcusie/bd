@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>各岗位在各城市的平均薪资 top5</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #main {
+            width: 1000px;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main"></div>
+    <script type="text/javascript">
+        var chartDom = document.getElementById('main');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        fetch('http://localhost:8000/JobCitySalaryTop')
+            .then(response => response.json())
+            .then(data => {
+                // 数据预处理
+                const jobs = [...new Set(data.map(d => d.job))];
+                const cities = [...new Set(data.map(d => d.city))];
+
+                const series = jobs.map(job => ({
+                    name: job,
+                    type: 'line',
+                    data: cities.map(city => {
+                        const entry = data.find(d => d.job === job && d.city === city);
+                        return entry ? entry.salary : null;
+                    })
+                }));
+
+                option = {
+                    title: {
+                        text: '各岗位在各城市的平均薪资 top5',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: jobs,
+                        top: '10%'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: cities,
+                        axisLabel: { rotate: 45 }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: '平均薪资（千元/月）'
+                    },
+                    series: series
+                };
+
+                option && myChart.setOption(option);
+            });
+    </script>
+</body>
+</html>

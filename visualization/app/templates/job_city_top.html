@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>各岗位在各城市的招聘数量 top5</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #main {
+            width: 1000px;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main"></div>
+    <script type="text/javascript">
+        var chartDom = document.getElementById('main');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        fetch('http://localhost:8000/JobCityTop')
+            .then(response => response.json())
+            .then(data => {
+                // 数据预处理 - 按岗位分组
+                const cities = [...new Set(data.map(d => d.city))];
+                const jobs = [...new Set(data.map(d => d.job))];
+
+                const series = cities.map(city => ({
+                    name: city,
+                    type: 'bar',
+                    data: jobs.map(job => {
+                        const entry = data.find(d => d.job === job && d.city === city);
+                        return entry ? entry.count : 0;
+                    })
+                }));
+
+                option = {
+                    title: {
+                        text: '各岗位在各城市的招聘数量 top5',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' }
+                    },
+                    legend: {
+                        data: cities,
+                        orient: 'horizontal',
+                        top: '10%',
+                        left: 'center'
+                    },
+                    grid: {
+                        right: 120 // 为右侧图例预留空间
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: jobs,
+                        axisLabel: { rotate: 45 }
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: series
+                };
+
+                option && myChart.setOption(option);
+            });
+    </script>
+</body>
+</html>
