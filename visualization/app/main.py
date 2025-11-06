@@ -30,14 +30,6 @@ def read_education_word_count():
     data = [{"education": line.split("\t")[0], "count": int(line.split("\t")[1])} for line in data]
     return JSONResponse(content=data)
 
-@app.get("/JobCityTop")
-def read_job_company_size():
-    file_path = "mr/JobCityTop/part-r-00000"
-    data = read_file_data(file_path)
-    # 解析: 第一列是岗位, 第二列是城市, 第三列是数量
-    data = [{"job": line.split("\t")[0], "city": line.split("\t")[1], "count": int(line.split("\t")[2])} for line in data]
-    return JSONResponse(content=data)
-
 @app.get("/JobCitySalaryTop")
 def read_job_education():
     file_path = "mr/JobCitySalaryTop/part-r-00000"
