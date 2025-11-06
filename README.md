@@ -13,6 +13,7 @@
 	- 工程实践.md : 报告编写, 最到导出word
 
 使用 obsidian 编写 `工程实践.md`
+
 配置图片放置位置为`-assets` : Settings | Files and links | Subfolder name
 
 
