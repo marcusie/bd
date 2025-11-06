@@ -1,0 +1,187 @@
+{
+  "main": {
+    "id": "512e60bdbf97a96a",
+    "type": "split",
+    "children": [
+      {
+        "id": "53865b028332c9a9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "fd2fb23c091d00cf",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "工程实践.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "工程实践"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "cdf0c12da7a877da",
+    "type": "split",
+    "children": [
+      {
+        "id": "3cd966badabd9902",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3a45c58c8279f5b4",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "b79055f80772b6e3",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "f9640d11def72577",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "89442251f305a429",
+    "type": "split",
+    "children": [
+      {
+        "id": "70d0cd939392f9c8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6437a9abf57eac17",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "工程实践.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "工程实践 的反向链接列表"
+            }
+          },
+          {
+            "id": "dd69cb13ef4bb6af",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "工程实践.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "工程实践 的出链列表"
+            }
+          },
+          {
+            "id": "aadf2617a5d84e25",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "f1281d1a53e97f6f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "工程实践.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "工程实践 的大纲"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 301.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:创建新数据库": false
+    }
+  },
+  "active": "fd2fb23c091d00cf",
+  "lastOpenFiles": [
+    "-assets/Pasted image 20251106204118.png",
+    "-assets/Pasted image 20251106204002.png",
+    "-assets/Pasted image 20251106203943.png",
+    "-assets/Pasted image 20251106203933.png",
+    "-assets/Pasted image 20251106203929.png",
+    "-assets/Pasted image 20251106203917.png",
+    "-assets/Pasted image 20251106203900.png",
+    "-assets/Pasted image 20251106203411.png",
+    "-assets/Pasted image 20251106203350.png",
+    "-assets/Pasted image 20251106203337.png",
+    "-assets/Pasted image 20251106203324.png"
+  ]
+}
