@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>岗位学历经验薪资关系</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #main {
+            width: 1000px;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main"></div>
+    <script type="text/javascript">
+        var chartDom = document.getElementById('main');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        fetch('http://localhost:8000/JobEducationExperienceSalaryAvg')
+            .then(response => response.json())
+            .then(data => {
+                // 提取唯一值用于坐标轴
+                const experiences = [...new Set(data.map(d => d.experience))].sort();
+                const educations = [...new Set(data.map(d => d.education))].sort();
+
+                // 构造矩阵数据
+                const seriesData = [];
+                data.forEach(item => {
+                    const x = experiences.indexOf(item.experience);
+                    const y = educations.indexOf(item.education);
+                    seriesData.push([x, y, item.salary]);
+                });
+
+                option = {
+                    title: {
+                        text: '岗位学历经验薪资关系',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        formatter: function (params) {
+                            return params.seriesName + '<br>' + 
+                                   '经验: ' + params.data[0] + '年<br>' + 
+                                   '学历: ' + params.data[1] + '<br>' + 
+                                   '薪资: ' + params.data[2] + '万元';
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        name: '经验（年）',
+                        data: experiences
+                    },
+                    yAxis: {
+                        type: 'category',
+                        name: '学历',
+                        data: educations
+                    },
+                    visualMap: {
+                        min: Math.min(...data.map(d => d.salary)),
+                        max: Math.max(...data.map(d => d.salary)),
+                        calculable: true,
+                        orient: 'horizontal',
+                        left: 'center',
+                        bottom: 20
+                    },
+                    series: [{
+                        name: '薪资分布',
+                        type: 'heatmap',
+                        data: seriesData,
+                        label: {
+                            show: true,
+                            color: '#fff'
+                        }
+                    }]
+                };
+
+                option && myChart.setOption(option);
+            });
+    </script>
+</body>
+</html>

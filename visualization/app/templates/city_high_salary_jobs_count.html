@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>高薪岗位数量城市分布</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div id="main" style="width: 1000px;height:600px;"></div>
+    <script type="text/javascript">
+        // 确保 DOM 加载完成后执行
+        document.addEventListener('DOMContentLoaded', function () {
+            var chartDom = document.getElementById('main');
+            var myChart = echarts.init(chartDom);
+            var option;
+
+            fetch('http://localhost:8000/CityHighSalaryJobsCount')
+                .then(response => response.json())
+                .then(data => {
+                    option = {
+                        title: {
+                            text: '高薪岗位数量城市分布',
+                            left: 'center'
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: { type: 'shadow' }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: data.map(item => item.city),
+                            axisLabel: { rotate: 45 }
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [{
+                            name: '高薪岗位数量',
+                            type: 'bar',
+                            data: data.map(item => item.count)
+                        }]
+                    };
+
+                    option && myChart.setOption(option);
+                });
+        });
+    </script>
+</body>
+</html>

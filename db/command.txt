@@ -1,0 +1,86 @@
+start-all.sh
+hdfs dfs -mkdir /lzh
+hdfs dfs -put recruit.csv /lzh
+hdfs dfs -cat /lzh/recruit.csv | head -10
+
+start-hbase.sh
+hbase shell
+count 'recruit'
+
+python importToHbase.py
+python hbaseOperate.py
+
+service mongodb start 
+mongod
+mongo
+
+python importToMongo.py
+python mongoOperate.py
+
+use mydatabase
+db.recruit.count()
+db.recruit.find().limit(5).pretty()
+
+db.recruit.aggregate([
+    { $group: { _id: { "公司类型": "$company_type", "学历要求": "$education_requirement" }, 职位数量: { $sum: 1 } } }
+])
+
+db.recruit.aggregate([
+    {
+        $group: {
+            _id: { 关键词: "$keyword", 学历要求: "$education_requirement" },
+            职位数量: { $sum: 1 }
+        }
+    },
+    {
+        $sort: { "职位数量": -1 } // 按职位数量降序排序
+    }
+]).pretty()
+
+var mapFunction = function() {
+    emit(this.city, 1); // 对每个文档发出城市名作为键，1作为值
+};
+var reduceFunction = function(key, values) {
+    return Array.sum(values); // 将所有值相加
+};
+db.recruit.mapReduce(
+    mapFunction,
+    reduceFunction,
+    {
+        out: "city_job_counts", // 输出到新的集合
+        query: {}, // 可选的查询条件，这里没有特别的条件
+        finalize: function(key, reducedValue) {
+            return reducedValue; // 可以在这里添加额外的处理逻辑
+        }
+    }
+)
+
+sudo systemctl start redis
+sudo systemctl status redis-server
+redis-cli ping
+
+python importToRedis.py
+python redisOperate.py
+
+cd /usr/local/neo4j/bin
+./neo4j console
+
+MATCH (city:City)
+RETURN city.name
+ORDER BY city.name
+
+MATCH (company:Company)
+RETURN company.name
+ORDER BY company.name
+
+MATCH (position:Position)
+RETURN position.title
+ORDER BY position.title
+
+MATCH (city:City)-[:HAS_COMPANY]->(company:Company)
+RETURN city.name AS City, company.name AS Company
+ORDER BY city.name, company.name
+
+MATCH (company:Company)-[:HAS_POSITION]->(position:Position)
+RETURN company.name AS Company, position.title AS Position
+ORDER BY company.name, position.title

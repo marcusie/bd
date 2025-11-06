@@ -1,0 +1,64 @@
+<!DOCTYPE html>  
+<html style="height: 100%">  
+<head>  
+    <meta charset="utf-8">  
+    <title>学历词频统计</title>  
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>  
+    <style>        html, body {  
+            height: 100%;  
+            margin: 0;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+        }  
+        #main {  
+            width: 800px;  
+            height: 600px;  
+        }  
+    </style>  
+</head>  
+<body>  
+<div id="main"></div>  
+<script type="text/javascript">  
+    var chartDom = document.getElementById('main');  
+    var myChart = echarts.init(chartDom);  
+    var option;  
+  
+    fetch('http://localhost:8000/EducationWordCount')  
+        .then(response => response.json())  
+        .then(data => {  
+            option = {  
+                title: {  
+                    text: '学历词频统计',  
+                    left: 'center'  
+                },  
+                tooltip: {  
+                    trigger: 'item'  
+                },  
+                legend: {  
+                    orient: 'vertical',  
+                    left: 'left'  
+                },  
+                series: [{  
+                    name: '学历',  
+                    type: 'pie',  
+                    radius: '50%',  
+                    data: data.map(item => ({value: item.count, name: item.education})),  
+                    label: {  
+                        formatter: ({name, value, percent}) => `${name}: ${value} (${percent.toFixed(1)}%)`  
+                    },  
+                    emphasis: {  
+                        itemStyle: {  
+                            shadowBlur: 10,  
+                            shadowOffsetX: 0,  
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'  
+                        }  
+                    }  
+                }]  
+            };  
+  
+            option && myChart.setOption(option);  
+        });  
+</script>  
+</body>  
+</html>
